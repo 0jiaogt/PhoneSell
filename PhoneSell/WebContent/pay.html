@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+            background: lightblue;
+        }
+
+        .pay {
+            margin: 100px auto;
+            width: 300px;
+            height: 140px;
+            background: #10c6e3;
+        }
+
+        .pay h3 {
+            text-align: center;
+            margin: 0px;
+            padding: 10px;
+            color: white;
+        }
+
+        .pay .content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pay .method {
+            float: left;
+            width: 23%;
+            height: 100%;
+            background: lightgreen;
+        }
+
+        .pay .wechat {
+            background: lightgrey;
+            height: 50%;
+            background: url('./img/wechat.jpg') center no-repeat;
+            background-size: 120%;
+        }
+
+        .pay .zhi {
+            height: 50%;
+            background: url('./img/zhi.jpg') center no-repeat;
+            background-size: 120%;
+        }
+
+        .pay .show {
+            float: right;
+            width: 77%;
+            height: 100%;
+            /* background: #3fabdf; */
+            background: #1cd164;
+            text-align: center;
+            transition: all 1s;
+        }
+
+        .pay .show img {
+            display: inline-block;
+            width: 140px;
+            height: 140px;
+            transition: all 0.8s;
+        }
+
+        .pay .buy {
+            background: #10c6e3;
+            text-align: center;
+            height: 30px;
+        }
+
+        .pay .buy span {
+            display: inline-block;
+            background: orangered;
+            color: white;
+            line-height: 30px;
+            padding: 0 5px;
+        }
+
+        .pay .buy span:hover {
+            cursor: pointer;
+            background: rgb(160, 201, 95);
+        }
+    </style>
+</head>
+
+<body>
+    <section class="pay">
+        <h3>请选择付款方式</h3>
+        <div class="content">
+            <div class="method">
+                <div class="wechat"></div>
+                <div class="zhi"></div>
+            </div>
+            <div class="show">
+                <img src="./img/we.jpg" alt="">
+            </div>
+        </div>
+        <div class="buy">
+            <span>完成购买</span>
+        </div>
+
+    </section>
+
+    <script>
+        var wechat = document.querySelector('.pay .wechat')
+        var zhi = document.querySelector('.pay .zhi')
+        var show = document.querySelector('.pay .show')
+        var imge = document.querySelector('.pay .show img')
+        var buy = document.querySelector('.pay .buy span')
+        wechat.onclick = function () {
+            show.style.background = '#1cd164'
+            imge.src = './img/we.jpg'
+        }
+
+        zhi.onclick = function () {
+            show.style.background = '#3fabdf'
+            imge.src = './img/z.jpg'
+        }
+        buy.onclick = function () {
+            alert('支付成功')
+            var url = "index.html"
+            window.location.href = url
+        }
+    </script>
+</body>
+
+</html>

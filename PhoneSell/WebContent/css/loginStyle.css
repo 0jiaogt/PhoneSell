@@ -1,0 +1,54 @@
+body {
+  margin    : 0px;
+  background: lightskyblue;
+}
+
+.main {
+  margin       : 100px auto;
+  width        : 300px;
+  height       : 230px;
+  background   : #d39d9d;
+  border-radius: 5%;
+}
+
+.main h4 {
+  text-align : center;
+  padding-top: 10px;
+}
+
+.main .tel span {
+  margin-left: 20px;
+}
+
+.main .password {
+  margin: 30px 0;
+}
+
+.main .password span {
+  margin-left: 35px;
+}
+
+.main .sub {
+  text-align: center;
+}
+
+.main .sub input {
+  border    : 1px solid orange;
+  background: #ced8d9;
+  outline   : none;
+}
+
+.main .sub input:hover {
+  background: #93bdd6;
+}
+
+.main .register {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.main .register a {
+  color: white;
+}
+
+/*# sourceMappingURL=./loginStyle.css.map */

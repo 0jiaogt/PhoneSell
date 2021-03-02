@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/cartStyle.css">
+</head>
+
+<body>
+    <!-- 登录，注册以及购物车 -->
+    <section class="header">
+        <div class="container">
+            <img src="./img/logo.png" alt="" class="sign">
+            <div class="login">
+                <span></span>
+                <a href="login.html">登录</a>
+                <a href="register.html">注册</a>
+                <a class="cart">购物车</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 手机品牌导航 -->
+    <section class="nav">
+        <div class="container">
+            <div class="menu">
+                <a href="index.html">首页</a>
+                <a>华为</a>
+                <a>小米</a>
+                <a>三星</a>
+                <a>魅族</a>
+                <a>vivo</a>
+            </div>
+            <div class="search">
+                <input type="text">
+                <a href="" class="">搜索</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 购物清单 -->
+    <section class="list">
+        <ul class="content">
+            <!-- <li>
+                <div>
+                    <img src="./img/10.jpg" alt="">
+                    <h5>华为</h5>
+                    <P>
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </P>
+                    <span>1399元</span>
+                    <button class="del">删除</button>
+                    <a>✔</a>
+                </div>
+            </li> -->
+        </ul>
+        <div class="buy">
+            合计：
+            <span class="money">1799元</span>
+            <span class="sure">确认购买</span>
+        </div>
+    </section>
+
+    <!-- 脚本 -->
+    <script src="./js/nav.js"></script>
+    <script src="./js/ajax.js"></script>
+    <script>
+        var userId = sessionStorage.getItem('userId')
+        var content = document.querySelector('.list .content')
+        var buy = document.querySelector('.list .buy .sure')
+        var all = document.querySelector('.list .buy .money')
+        var sum = 0
+
+        function pay() {
+            var url = "pay.html"
+            window.location.href = url
+        }
+
+        buy.onclick = function () {
+            var strBuy = 'phoneNumber=' + userId
+            ajax('post', '/PhoneSell/ShoppingDeleteAll', strBuy, pay)
+        }
+
+        function init(data) {
+            var obj = JSON.parse(data.responseText)
+            console.log(data.responseText + 's')
+            for (var i = 0; i < obj.length; i++) {
+                li = document.createElement('li')
+                li.index = obj[i]['id']
+                content.appendChild(li)
+                card = document.createElement('div')
+                li.appendChild(card)
+                imge = document.createElement('img')
+                imge.src = './img/' + obj[i]['print']
+                card.appendChild(imge)
+                imge.index = obj[i]['id']
+                // imge.onclick = function () {
+                //     var str = this.index
+                //     var url = "phone.html?str=" + str
+                //     window.location.href = url
+                // }
+                phoneName = document.createElement('h5')
+                numbers = document.createElement('p')
+                price = document.createElement('span')
+                del = document.createElement('button')
+                del.onclick = function () {
+                    var str2 = 'phoneNumber=' + userId + '&phoneID=' + li.index
+                    console.log(str)
+                    ajax('post', '/PhoneSell/ShoppingDelete', str2, init)
+                }
+                phoneName.innerHTML = obj[i]['name']
+                numbers.innerHTML = obj[i]['number']
+                price.innerHTML = obj[i]['price']
+                sum += obj[i]['price'] * obj[i]['number']
+                del.innerHTML = '删除'
+                card.appendChild(phoneName)
+                card.appendChild(numbers)
+                card.appendChild(price)
+                card.appendChild(del)
+            }
+            all.innerHTML = sum + '元'
+        }
+        var str = 'phoneNumber=' + userId
+        console.log(str)
+        ajax('post', '/PhoneSell/ShoppingAll', str, init)
+
+
+        //增加
+        // var chose = document.querySelector('.list .content li div a')
+        // var card = document.querySelector('.list .content li div')
+        // var index1 = 0
+        // chose.onclick = function () {
+        //     if (index1 == 1) {
+        //         card.getElementsByTagName('a')[0].style.background = 'white'
+        //         card.style.borderColor = '#c2c2ca'
+        //         card.getElementsByTagName('a')[0].style.border = '1px solid #848282'
+        //         index1 = 0
+        //     } else {
+        //         card.getElementsByTagName('a')[0].style.background = '#f84848'
+        //         card.style.borderColor = '#f84848'
+        //         card.getElementsByTagName('a')[0].style.border = 'none'
+        //         index1 = 1
+        //     }
+
+        // }
+
+        function init(data) {
+            var obj = JSON.parse(data.responseText)
+            console.log(data.responseText + 's')
+            for (var i = 0; i < obj.length; i++) {
+                //创建标签并添加到content（ul）里
+                li = document.createElement('li')
+                card = document.createElement('div')
+                imge = document.createElement('img')
+                phoneName = document.createElement('h5')
+                numbers = document.createElement('p')
+                num = document.createElement('span')
+                price = document.createElement('span')
+                add = document.createElement('button')
+                reduce = document.createElement('button')
+                del = document.createElement('button')
+                sign = document.createElement('a')
+                li.index = obj[i]['id']
+                li.chose = 0
+                //为标签赋值
+                content.appendChild(li)
+                imge.src = './img/' + obj[i]['print']
+                phoneName.innerHTML = obj[i]['name']
+                num.innerHTML = obj[i]['number']
+                price.innerHTML = obj[i]['price']
+                del.innerHTML = '删除'
+                add.innerHTML = '+'
+                add.innerHTML = '-'
+                sign.innerHTML = '1'
+                //添加标签
+                li.appendChild(card)
+                card.appendChild(phoneName)
+                card.appendChild(numbers)
+                card.appendChild(price)
+                card.appendChild(del)
+                card.appendChild(sign)
+                numbers.appendChild(reduce)
+                numbers.appendChild(num)
+                numbers.appendChild(add)
+
+                imge = document.createElement('img')
+                imge.src = './img/' + obj[i]['print']
+                card.appendChild(imge)
+                imge.index = obj[i]['id']   /*div.onclick = function(e){
+                             if(e.target.classList.contains('')
+                }*/
+
+                phoneName = document.createElement('h5')
+                numbers = document.createElement('p')
+                price = document.createElement('span')
+                del = document.createElement('button')
+                del.onclick = function () {
+                    var str2 = 'phoneNumber=' + userId + '&phoneID=' + li.index
+                    console.log(str)
+                    ajax('post', '/PhoneSell/ShoppingDelete', str2, init)
+                }
+                phoneName.innerHTML = obj[i]['name']
+                numbers.innerHTML = obj[i]['number']
+                price.innerHTML = obj[i]['price']
+                sum += obj[i]['price'] * obj[i]['number']
+                del.innerHTML = '删除'
+                card.appendChild(phoneName)
+                card.appendChild(numbers)
+                card.appendChild(price)
+                card.appendChild(del)
+            }
+            all.innerHTML = sum + '元'
+        }
+        var str = 'phoneNumber=' + userId
+        console.log(str)
+        ajax('post', '/PhoneSell/ShoppingAll', str, init)
+
+
+        function getAllPrice() {
+            var allPrice = 0
+            var lis = document.querySelectorAll('.list .content li')
+            for (var i = 0; i < lis.length; i++) {
+                if (lis[i].chose == 1) {
+                    allPrice += lis[i].num * lis[i].price
+                }
+            }
+            all.innerHTML = allPrice+'元'
+        }
+        function addli() {
+            for (var i = 0; i < 5; i++) {
+                //创建标签并添加到content（ul）里
+                li = document.createElement('li')
+                card = document.createElement('div')
+                imge = document.createElement('img')
+                phoneName = document.createElement('h5')
+                numbers = document.createElement('p')
+                num = document.createElement('span')
+                price = document.createElement('span')
+                add = document.createElement('button')
+                reduce = document.createElement('button')
+                del = document.createElement('button')
+                sign = document.createElement('a')
+                del.className = 'del'
+                num.className = 'num'
+                price.className = 'price'
+                add.className = 'add'
+                reduce.className = 'reduce'
+                li.chose = 0
+                li.index = i
+                li.price = 1888
+                li.num = 1
+                //为标签赋值
+                content.appendChild(li)
+                imge.src = './img/5.jpg'
+                phoneName.innerHTML = '小米'
+                num.innerHTML = '1'
+                price.innerHTML = '1999' + '元'
+                del.innerHTML = '删除'
+                add.innerHTML = '+'
+                reduce.innerHTML = '-'
+                sign.innerHTML = '✔'
+                //添加标签
+                li.appendChild(card)
+                card.appendChild(imge)
+                card.appendChild(phoneName)
+                card.appendChild(numbers)
+                card.appendChild(price)
+                card.appendChild(del)
+                card.appendChild(sign)
+                numbers.appendChild(reduce)
+                numbers.appendChild(num)
+                numbers.appendChild(add)
+                //添加事件
+                li.onclick = function (e) {
+                    var that = this
+                    if (e.target.nodeName.toLocaleLowerCase() == 'a') {
+                        if (that.chose == 1) {
+                            that.getElementsByTagName('a')[0].style.background = 'white'
+                            that.getElementsByTagName('a')[0].style.border = '1px solid #848282'
+                            that.getElementsByTagName('div')[0].style.borderColor = '#c2c2ca'
+                            that.chose = 0
+                        } else {
+                            that.getElementsByTagName('a')[0].style.background = '#f84848'
+                            that.getElementsByTagName('a')[0].style.border = 'none'
+                            that.getElementsByTagName('div')[0].style.borderColor = '#f84848'
+                            that.chose = 1
+                        }
+                        getAllPrice()
+                    }
+                    if (e.target.nodeName.toLocaleLowerCase() == 'button') {
+                        switch (e.target.className) {
+                            case 'reduce':
+                                console.log(e.target.className);
+                                that.num--
+                                that.num = (that.num < 1) ? 1 : that.num
+                                that.getElementsByClassName('price')[0].innerHTML = that.num * that.price + '元'
+                                that.getElementsByClassName('num')[0].innerHTML = that.num
+                                // var str = 'phoneNumber=' + userId + '&phoneID=' + that.index
+                                // console.log(str)
+                                // ajax('post', '/PhoneSell/ShoppingDelete', str2, init)
+                                break;
+                            case 'add':
+                                console.log(e.target.className);
+                                that.num++
+                                that.num = (that.num > 9) ? 9 : that.num
+                                that.getElementsByClassName('price')[0].innerHTML = that.num * that.price + '元'
+                                that.getElementsByClassName('num')[0].innerHTML = that.num
+                                break;
+                            case 'del':
+                                console.log(e.target.className);
+                                break;
+                        }
+                        getAllPrice()
+                    }
+                }
+            }
+            getAllPrice()
+        }
+        addli()
+    </script>
+</body>
+
+</html>

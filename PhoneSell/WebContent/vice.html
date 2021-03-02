@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/viceStyle.css">
+</head>
+
+<body>
+    <!-- 登录，注册以及购物车 -->
+    <section class="header">
+        <div class="container">
+            <img src="./img/logo.png" alt="" class="sign">
+            <div class="login">
+                <span></span>
+                <a href="login.html">登录</a>
+                <a href="register.html">注册</a>
+                <a class="cart">购物车</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 手机品牌导航 -->
+    <section class="nav">
+        <div class="container">
+            <div class="menu">
+                <a href="index.html">首页</a>
+                <a>华为</a>
+                <a>小米</a>
+                <a>三星</a>
+                <a>魅族</a>
+                <a>vivo</a>
+            </div>
+            <div class="search">
+                <input type="text">
+                <a>搜索</a>
+            </div>
+        </div>
+        <section class="showPhone">
+            <ul class="content">
+               <li>
+                    <div>
+                        <img src="./img/phone.jpg" alt=""> 
+                        <a></a>
+                        <h5>华为1</h5>
+                        <p>64g+128g</p>
+                        <span>1799元</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <script src="./js/ajax.js"></script>
+    <script src="./js/nav.js"></script>
+    <script>
+        var chose = window.location.href.split("=")[1]
+        // var current = 100
+        var content = document.querySelector('.showPhone .content')
+        var li
+        var card
+        var imge
+        var phoneName
+        var price
+        var info
+
+        function show(data) {
+            var obj = JSON.parse(data.responseText)
+            for (var i = 0; i < obj.length; i++) {
+                li = document.createElement('li')
+                content.appendChild(li)
+                card = document.createElement('div')
+                li.appendChild(card)
+                imge = document.createElement('a')
+                imge.style.background= 'url('+'./img/'+obj[i]['print'] +')'
+                card.appendChild(imge)
+                imge.index = obj[i]['id']
+                imge.onclick = function () {
+                    var str = this.index
+                    var url = "phone.html?str=" + str
+                    window.location.href = url
+                }
+                phoneName = document.createElement('h5')
+                info = document.createElement('p')
+                price = document.createElement('span')
+                phoneName.innerHTML = obj[i]['name']
+                info.innerHTML = obj[i]['stock']
+                price.innerHTML = obj[i]['price']
+                card.appendChild(phoneName)
+                card.appendChild(info)
+                card.appendChild(price)
+            }
+
+
+        }
+ 
+        if (chose == 'all') {
+            ajax('post', '/PhoneSell/PhoneAll', '', show)
+            
+            // console.log('全部')
+        } 
+        else if (chose == 'hw' || chose == 'mi' || chose == 'sam' || chose == 'mei' || chose == 'vivo') {
+            console.log('品牌')
+           var str = 'model=' + chose
+            ajax('post', '/PhoneSell/PhoneModel', str, show)
+        } 
+        else {
+            var str = 'name=' + chose
+            console.log(str)
+            ajax('post', '/PhoneSell/PhoneSearch', str, show)
+        }
+    </script>
+</body>
+
+</html>

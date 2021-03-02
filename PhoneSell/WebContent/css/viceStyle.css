@@ -1,0 +1,127 @@
+.header {
+  margin: 10px 0;
+  background: #6a7e8a;
+}
+.header .container {
+  width: 1170px;
+  height: 50px;
+  margin: 0 auto;
+}
+.header .container .sign {
+  display: inline-block;
+}
+.header .container .login {
+  float: right;
+  line-height: 50px;
+}
+.header .container .login a {
+  display: inline-block;
+  margin: 0 10px;
+  height: 100%;
+  text-decoration: none;
+  color: black;
+}
+.header .container .login a:last-child {
+  cursor: pointer;
+  background: #f1d969;
+}
+.nav .container {
+  width: 1170px;
+  height: 70px;
+  margin: 0 auto;
+  background: #29b1b8;
+}
+.nav .container .menu {
+  width: 50%;
+  float: left;
+}
+.nav .container .menu a {
+  line-height: 70px;
+  text-align: center;
+  display: inline-block;
+  width: 10%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+}
+.nav .container .menu a:hover {
+  color: lightpink;
+}
+.nav .container .search {
+  margin: 17px 0;
+  width: 18%;
+  height: 35px;
+  float: right;
+  position: relative;
+  top: 0px;
+  right: 10px;
+  background: white;
+}
+.nav .container .search input {
+  position: absolute;
+  top: 7px;
+  left: 3px;
+  border: none;
+  outline: none;
+}
+.nav .container .search a {
+  text-align: center;
+  line-height: 35px;
+  display: inline-block;
+  height: 100%;
+  width: 20%;
+  text-decoration: none;
+  background: #e7e6d3;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: black;
+}
+.showPhone {
+  margin-top: 30px;
+}
+.showPhone::after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.showPhone .content {
+  margin: 0px auto;
+  padding: 0px;
+  list-style: none;
+  width: 1180px;
+}
+.showPhone .content li {
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 0 5px;
+  float: left;
+  width: 20%;
+}
+.showPhone .content li div {
+  border-top: 1px solid blue;
+  height: 330px;
+  background: #fafafa;
+  text-align: center;
+}
+.showPhone .content li div a {
+  width: 220px;
+  height: 220px;
+  display: inline-block;
+  background: url(../img/phone.jpg);
+}
+.showPhone .content li div a:hover {
+  cursor: pointer;
+}
+.showPhone .content li div h5 {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+.showPhone .content li div p {
+  color: #b0b0b0;
+}
+.showPhone .content li div span {
+  color: orangered;
+}
+/*# sourceMappingURL=./viceStyle.css.map */

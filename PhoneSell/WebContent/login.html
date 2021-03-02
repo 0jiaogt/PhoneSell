@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/loginStyle.css">
+</head>
+
+<body>
+    <section class="main">
+        <h4>用户登录</h4>
+        <div class="tel">
+            <span>手机号：</span>
+            <input type="text" placeholder="请输入手机号">
+        </div>
+        <div class="password">
+            <span>密码：</span>
+            <input type="password" placeholder="请输入密码">
+        </div>
+        <div class="sub">
+            <input type="submit" value="登录">
+            <!-- <button >登录</button> -->
+        </div>
+        <div class="register">
+            <span>还未有账号？</span>
+            <a href="register.html">点击注册</a>
+        </div>
+    </section>
+
+    <!-- 脚本 -->
+    <script src="./js/ajax.js"></script>
+    <script>
+
+        var tel = document.querySelector('.main .tel input')
+        var password = document.querySelector('.main .password input')
+        var login = document.querySelector('.main .sub')
+
+        function deal(data) {
+            var obj = JSON.parse(data.responseText)
+            if (obj['isSure']=='sure') {
+                alert('用户名或密码错误')
+            }
+            else {
+                sessionStorage.setItem('userId', tel.value)
+                var url = "index.html"
+                window.location.href = url
+            }
+        }
+         
+        login.onclick = function () {
+            console.log(tel.value.length)
+            var str = 'phone=' + tel.value + '&password=' + password.value
+            ajax('post', '/PhoneSell/UserLogin', str, deal)
+        }
+    </script>
+</body>
+
+</html>

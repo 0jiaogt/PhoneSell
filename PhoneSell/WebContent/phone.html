@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/phoneStyle.css">
+    <style>
+        .comment {
+            margin: 30px auto;
+            width: 1100px;
+        }
+
+        .comment h3 {
+            margin: 0;
+            padding: 10px 20px;
+            color: white;
+            background-color: #1d5874c4
+        }
+
+        .comment .main {
+            list-style: none;
+            width: 1060px;
+            margin: 0px;
+            padding: 0 20px;
+        }
+
+        .comment .main li {
+            border-bottom: 1px dashed #beb4b4;
+        }
+
+        .comment .head {
+            width: 30px;
+            height: 30px;
+            margin: 5px 0;
+            margin-right: 3px;
+            border-radius: 50%;
+            background: url('./img/head.jpg') center;
+            background-size: 100%;
+            display: inline-block;
+        }
+
+        .comment .main li .name {
+            margin: 10px 0;
+            color: #2e2e2e;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            vertical-align: top;
+            text-decoration: none;
+        }
+
+        .comment .main li .date {
+            display: inline-block;
+            margin: 11px 10px;
+            font-size: 12px;
+            color: #999;
+            vertical-align: top;
+        }
+
+        .comment .main li .content {
+            width: 1100px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+            color: #4d4d4d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 登录，注册以及购物车 -->
+    <section class="header">
+        <div class="container">
+            <img src="./img/logo.png" alt="" class="sign">
+            <div class="login">
+                <span></span>
+                <a href="login.html">登录</a>
+                <a href="register.html">注册</a>
+                <a href="cart.html">购物车</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 手机品牌导航 -->
+    <section class="nav">
+        <div class="container">
+            <div class="menu">
+                <a href="index.html">首页</a>
+                <a>华为</a>
+                <a>小米</a>
+                <a>三星</a>
+                <a>魅族</a>
+                <a>vivo</a>
+            </div>
+            <div class="search">
+                <input type="text">
+                <a href="" class="">搜索</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 手机详情 -->
+    <section class="phone">
+        <div class="content">
+            <div class="picture">
+                <img src="./img/phone.jpg" alt="">
+            </div>
+            <div class="mation">
+                <h3>华为1</h3>
+                <p>颜色：<span class="colour">蓝色</span></p>
+                <p>内存：<span class="memory">64g</span></p>
+                <p>价格：<span class="price">1799</span>元</p>
+                <p>库存：<span class="repertory">3333</span></p>
+                <p><span class="info"> 超高性价比，更轻更薄</span></p>
+            </div>
+            <div class="addToCart">
+                数量：
+                <button class="reduce">-</button>
+                <span class="number">1</span>
+                <button class="add">+</button>
+                <button class="buy">加入购物车</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="ale" class="comment">
+        <h3>商品评价</h3>
+        <ul class="main">
+            <li>
+                <a class="head"></a>
+                <a class="name">用户名</a>
+                <span class="date">时间</span>
+                <div class="content">
+                    挺好的，学到东西了。
+                </div>
+            </li>
+            <li>
+                <a class="head"></a>
+                <a class="name">用户名</a>
+                <span class="date">时间</span>
+                <div class="content">
+                    挺好的，学到东西了。
+                </div>
+            </li>
+            <li>
+                <a class="head"></a>
+                <a class="name">用户名</a>
+                <span class="date">时间</span>
+                <div class="content">
+                    挺好的，学到东西了。
+                </div>
+            </li>
+        </ul>
+    </section class="ale">
+    
+    <section>
+
+    </section>
+    <script>
+        var phoneId = window.location.href.split("=")[1]
+
+        var number = 1
+        var phoneImg = document.querySelector('.phone .picture img')
+        var phoneName = document.querySelector('.phone .mation h3')
+        var phoneColor = document.querySelector('.phone .mation .colour')
+        var phoneMemory = document.querySelector('.phone .mation .memory')
+        var phonePrice = document.querySelector('.phone .mation .price')
+        var phoneStock = document.querySelector('.phone .mation .repertory')
+        var phoneInfo = document.querySelector('.phone .mation .info')
+        var brand = document.querySelectorAll('.nav .container .menu a')
+        var cut = document.querySelector('.phone .reduce')
+        var add = document.querySelector('.phone .add')
+        var num = document.querySelector('.phone .number')
+        var buy = document.querySelector('.phone .buy')
+
+        cut.onclick = function () {
+            number--
+            number = (number < 1) ? 1 : number
+            num.innerHTML = number
+        }
+        add.onclick = function () {
+            number++
+            number = (number > 9) ? 9 : number
+            num.innerHTML = number
+        }
+
+        function add(data) {
+
+        }
+
+        buy.onclick = function () {
+            var userId = sessionStorage.getItem('userId')
+            if (userId) {
+                console.log('已登录')
+                var str = 'phoneNumber=' + userId + '&phoneID=' + phoneId + '&number=' + number
+                ajax('post', '/PhoneSell/ShoppingAdd', str, add)
+                alert('成功加入购物车')
+            } else {
+                console.log('未登录')
+                alert('请先登录')
+            }
+        }
+
+
+        brand[1].onclick = function () {
+            var str = 'hw'
+            var url = "vice.html?str=" + str
+            window.location.href = url
+        }
+        brand[2].onclick = function () {
+            var str = 'mi'
+            var url = "vice.html?str=" + str
+            window.location.href = url
+        }
+        brand[3].onclick = function () {
+            var str = 'sam'
+            var url = "vice.html?str=" + str
+            window.location.href = url
+        }
+        brand[4].onclick = function () {
+            var str = 'mei'
+            var url = "vice.html?str=" + str
+            window.location.href = url
+        }
+        brand[5].onclick = function () {
+            var str = 'vivo'
+            var url = "vice.html?str=" + str
+            window.location.href = url
+        }
+
+        function createXMLHttpObject() {
+            var xmlhr = [
+                function () { return new XMLHttpRequest(); },
+                function () { return new ActiveObject("Msxml2.XMLHTTP"); },
+                function () { return new ActiveObject("Msxml3.XMLHTTP"); },
+                function () { return new ActiveObject("Microsoft.XMLHTTP"); },
+            ];
+            var xhr = false;
+            for (var i = 0; i < xmlhr.length; i++) {
+                try {
+                    xhr = xmlhr[i]();
+                }
+                catch (e) {
+                    continue;
+                }
+                break;
+            }
+            return xhr;
+        }
+
+        function ajax(type, url, str, callback) {
+            var xmlHttpRe = createXMLHttpObject();
+            xmlHttpRe.onreadystatechange = function () {
+                if (xmlHttpRe.readyState == 4) {
+                    if (xmlHttpRe.status == 200) {
+                        console.log("请求成功");
+                        if (callback != null) {
+
+                            callback(xmlHttpRe);
+                        }
+
+                    }
+                }
+            }
+            if (type == "get") {
+                url += "?" + str;
+                console.log(url)
+            }
+            xmlHttpRe.open(type, url, true);
+            if (type == "post") {
+                xmlHttpRe.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            }
+
+
+            if (type == "post") {
+                xmlHttpRe.send(str);
+            }
+            else {
+                xmlHttpRe.send(null);
+            }
+            //	xmlHttpRe.open(type, url, true);
+            //	xmlHttpRe.send(null);
+        }
+        function singlePhone(data) {
+            var obj = JSON.parse(data.responseText)
+            console.log(data.responseText)
+            // phoneImg.src=obj['print']
+            phoneImg.src = './img/' + obj['print']
+            phoneName.innerHTML = obj['name']
+            phoneColor.innerHTML = obj['color']
+            phoneMemory.innerHTML = obj['memory']
+            phonePrice.innerHTML = obj['price']
+            phoneStock.innerHTML = obj['stock']
+            phoneInfo.innerHTML = obj['info']
+        }
+        var str = 'phoneId=' + phoneId
+        ajax('post', '/PhoneSell/PhoneOne', str, singlePhone)
+
+        var wrapper = document.querySelector('.comment .main')
+        var li
+        var head
+        var userName
+        var data
+        var content
+
+        function showComment(data) {
+            var obj = JSON.parse(data.responseText)
+            for (var i = 0; i < obj.length; i++) {
+                li = document.createElement('li')
+                userName = document.createElement('a')
+                head = document.createElement('a')
+                userName = document.createElement('a')
+                data = document.createElement('span')
+                content = document.createElement('div')
+                userName.innerHTML = obj[i]['userName']
+                data.innerHTML = obj[i]['time']
+                content.innerHTML = obj[i]['content']
+                wrapper.appendChild(li)
+                li.appendChild(head)
+                li.appendChild(userName)
+                li.appendChild(data)
+                li.appendChild(content)
+                head.className = 'head'
+                userName.className = 'name'
+                data.className = 'date'
+                content.className = 'content'
+            }
+        }
+        ajax('post', '/PhoneSell/PhoneOne', str, showComment)
+    </script>
+</body>
+
+</html>

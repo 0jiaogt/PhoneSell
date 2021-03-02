@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/registerStyle.css">
+</head>
+
+<body>
+    <section class="main">
+        <h4>注册用户</h4>
+        <div class="userName">
+            <span>用户名：</span>
+            <input type="text" placeholder="请输入6位以内用户名">
+        </div>
+        <div class="tel">
+            <span>手机号：</span>
+            <input type="text" placeholder="请输入手机号">
+        </div>
+        <div class="password">
+            <span>密码：</span>
+            <input type="text" placeholder="请输入6-8位密码">
+        </div>
+        <div class="sub">
+            <input type="submit" value="注册">
+        </div>
+        <div class="login">
+            <span>已有账号？</span>
+            <a href="login.html">点击登录</a>
+        </div>
+    </section>
+
+    <!-- 脚本 -->
+    <script src="./js/ajax.js"></script>
+    <script>
+        var userName = document.querySelector('.main .userName input')
+        var tel = document.querySelector('.main .tel input')
+        var password = document.querySelector('.main .password input')
+        var login = document.querySelector('.main .sub')
+
+
+        function register(data) {
+        
+           console.log(data.responseText)
+            if (data.responseText=='true') {
+                alert('注册成功')
+                var url = "login.html"
+                window.location.href = url
+            }
+            else {
+                alert('该手机号已注册')
+            }
+        }
+
+        login.onclick = function () {
+            // console.log(tel.value.length)
+            if (userName.value.length == 0 || userName.value.length > 6) {
+                alert('请输入6位以内用户名')
+            }
+            else if (tel.value.length != 11) {
+                alert('请输入正确的手机号')
+            }
+            else if (password.value.length < 6 || password.value.length > 8) {
+                alert('请输入6-8位密码')
+            }
+            else {
+                var str = 'name=' + userName.value + '&phone=' + tel.value + '&password=' + password.value
+                ajax('post', '/PhoneSell/UserSave', str, register)
+            }
+        }
+    </script>
+</body>
+
+</html>

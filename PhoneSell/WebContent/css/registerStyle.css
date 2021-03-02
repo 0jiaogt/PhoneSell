@@ -1,0 +1,49 @@
+body {
+  margin: 0px;
+  background: lightskyblue;
+}
+.main {
+  margin: 100px auto;
+  width: 300px;
+  height: 250px;
+  background: #d39d9d;
+  border-radius: 5%;
+}
+.main h4 {
+  text-align: center;
+  padding-top: 10px;
+}
+.main .userName {
+  margin-bottom: 20px;
+}
+.main .userName span {
+  margin-left: 20px;
+}
+.main .tel span {
+  margin-left: 20px;
+}
+.main .password {
+  margin: 20px 0;
+}
+.main .password span {
+  margin-left: 35px;
+}
+.main .sub {
+  text-align: center;
+}
+.main .sub input {
+  border: 1px solid orange;
+  background: #ced8d9;
+  outline: none;
+}
+.main .sub input:hover {
+  background: #93bdd6;
+}
+.main .login {
+  margin-top: 15px;
+  text-align: center;
+}
+.main .login a {
+  color: white;
+}
+/*# sourceMappingURL=./registerStyle.css.map */
